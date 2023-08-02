@@ -11,6 +11,7 @@ const BlogCard = ({ blog }) => {
       <figure>
         <img
           src={
+            thumbnail ||
             'https://i.pinimg.com/564x/5b/ac/02/5bac02a523df792c7e4e2fa6be49c354.jpg'
           }
           alt={title + ' Thumbnail Image'}

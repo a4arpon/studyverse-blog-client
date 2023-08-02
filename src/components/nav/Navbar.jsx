@@ -17,7 +17,7 @@ const NavItems = () => {
 }
 const Navbar = () => {
   return (
-    <nav className="bg-base-200 sticky top-0 z-10 bg-opacity-60">
+    <nav className="bg-base-300 sticky top-0 z-10 bg-opacity-90">
       <div className="navbar container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">

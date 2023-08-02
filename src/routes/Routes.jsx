@@ -2,7 +2,9 @@ import { createBrowserRouter } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 import Blog from '../pages/blog/Blog'
 import Blogs from '../pages/blogs/Blogs'
+import Editor from '../pages/editor/Editor'
 import Home from '../pages/home/Home'
+import MyBlogs from '../pages/my-blogs/MyBlogs'
 
 const Routes = createBrowserRouter([
   {
@@ -20,6 +22,14 @@ const Routes = createBrowserRouter([
       {
         path: '/blogs/:blogID',
         element: <Blog />,
+      },
+      {
+        path: '/my-posts',
+        element: <MyBlogs />,
+      },
+      {
+        path: '/editor',
+        element: <Editor />,
       },
     ],
   },
