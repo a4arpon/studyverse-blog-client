@@ -1,57 +1,71 @@
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
-
-const Editor = () => {
+const Updater = () => {
   const [formValue, setFormValueValue] = useState('')
   const { register, handleSubmit } = useForm()
+  const { postID } = useParams()
+  const [blogItem, setBlogItem] = useState({})
   const { user, loading } = useAuth()
-  const imgBBUrl = `https://api.imgbb.com/1/upload?key=${
-    import.meta.env.VITE_IMGBB_KEY
-  }`
   const navigator = useNavigate()
   useEffect(() => {
     if (!user && !loading) {
       navigator('/')
+    } else if (user) {
+      fetch(`${import.meta.env.VITE_SERVER_URL}/blogs/${postID}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setBlogItem(result)
+        })
+    }
+    return () => {
+      setBlogItem({})
     }
   }, [user])
-  const formHandler = (data) => {
-    const imgData = new FormData()
-    imgData.append('image', data.thumbnailImage[0])
-    const postPacket = {
-      title: data.blogTitle,
-      blog: formValue,
-      thumbnail:
-        'https://i.pinimg.com/564x/fb/ef/92/fbef9238845d30e7e2921c30f2e8b213.jpg',
-      publishedAt: new Date(),
-      authorEmail: user?.email,
-      author: user?.displayName,
+  useEffect(() => {
+    if (blogItem?.blog) {
+      setFormValueValue(blogItem?.blog)
     }
-    fetch(`${import.meta.env.VITE_SERVER_URL}/blogs`, {
-      method: 'POST',
+    return () => {
+      setFormValueValue()
+    }
+  }, [blogItem?.blog])
+
+  const formHandler = (data) => {
+    const postPacket = {
+      title: data.blogTitle || blogItem?.title,
+      blog: formValue,
+    }
+    fetch(`${import.meta.env.VITE_SERVER_URL}/blogs/${postID}`, {
+      method: 'PUT',
       body: JSON.stringify(postPacket),
       headers: {
         'Content-Type': 'application/json',
       },
     })
       .then((res) => res.json())
-      .then((res) => console.log(res))
+      .then((res) => {
+        toast.success('Update complete.')
+        navigator('/my-posts')
+      })
   }
+
   return (
     <>
       <Helmet>
-        <title>Add Post | StudyVerse</title>
+        <title>Edit Post | StudyVerse</title>
       </Helmet>
       <main className="container mx-auto p-2 lg:px-0 py-10">
         <form onSubmit={handleSubmit(formHandler)}>
           <div className="flex gap-3 justify-between border-b-2 mb-3 pb-2 items-center">
-            <h1 className="text-xl ">Add Post</h1>
+            <h1 className="text-xl ">Edit Post</h1>
             <button className="btn btn-neutral px-10" type="submit">
-              Post
+              Update
             </button>
           </div>
           <div>
@@ -60,12 +74,8 @@ const Editor = () => {
                 type="text"
                 className="input input-bordered w-full focus:outline-none"
                 placeholder="Blog Title"
+                defaultValue={blogItem?.title}
                 {...register('blogTitle')}
-              />
-              <input
-                type="file"
-                className="file-input file-input-bordered"
-                {...register('thumbnailImage')}
               />
             </div>
 
@@ -82,4 +92,4 @@ const Editor = () => {
   )
 }
 
-export default Editor
+export default Updater

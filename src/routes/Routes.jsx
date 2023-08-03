@@ -5,6 +5,7 @@ import Register from '../pages/auth/register/Register'
 import Blog from '../pages/blog/Blog'
 import Blogs from '../pages/blogs/Blogs'
 import Editor from '../pages/editor/Editor'
+import Updater from '../pages/editor/Updater'
 import Home from '../pages/home/Home'
 import MyBlogs from '../pages/my-blogs/MyBlogs'
 
@@ -32,6 +33,10 @@ const Routes = createBrowserRouter([
       {
         path: '/editor',
         element: <Editor />,
+      },
+      {
+        path: '/editor/:postID',
+        element: <Updater />,
       },
       {
         path: '/login',

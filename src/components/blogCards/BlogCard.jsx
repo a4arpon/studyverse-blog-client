@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { dateFormat } from '../../utils/dateFormat'
 
 const BlogCard = ({ blog }) => {
   const { title, author, publishedAt, thumbnail, _id } = blog || {}
@@ -23,7 +24,7 @@ const BlogCard = ({ blog }) => {
         <div>
           <p className="text-lg">
             <strong>Published At: </strong>
-            {publishedAt}
+            {dateFormat(publishedAt)}
           </p>
           <p className="text-lg">
             <strong>Author: </strong>
