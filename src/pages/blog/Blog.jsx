@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useParams } from 'react-router-dom'
+import { dateFormat } from '../../utils/dateFormat'
 
 const Blog = () => {
   const { blogID } = useParams()
@@ -14,7 +15,7 @@ const Blog = () => {
     }
   }, [])
 
-  const { title, blog, publishedAt, publisher, thumbnail } = blogItem
+  const { title, blog, publishedAt, author, thumbnail } = blogItem
   return (
     <>
       <Helmet>
@@ -25,10 +26,10 @@ const Blog = () => {
           <div className=" border-b-2 pb-2 mb-3">
             <h1 className="text-2xl">{title}</h1>
             <p>
-              <strong>Publisher : </strong> {publisher}
+              <strong>Publisher : </strong> {author}
             </p>
             <p>
-              <strong>Publishing Date : </strong> {publishedAt}
+              <strong>Publishing Date : </strong> {dateFormat(publishedAt)}
             </p>
           </div>
           <div className="flex justify-center border-b-2 mb-3 pb-2">
@@ -41,7 +42,10 @@ const Blog = () => {
               className="w-full lg:max-w-lg rounded-lg "
             />
           </div>
-          <div dangerouslySetInnerHTML={{ __html: blog }}></div>
+          <div
+            dangerouslySetInnerHTML={{ __html: blog }}
+            className="blog"
+          ></div>
         </article>
         <div className="lg:w-2/5"></div>
       </main>

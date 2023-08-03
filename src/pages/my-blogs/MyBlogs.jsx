@@ -1,13 +1,20 @@
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { useNavigate } from 'react-router-dom'
 import BlogListItem from '../../components/blogCards/BlogListItem'
+import useAuth from '../../hooks/useAuth'
 
 const MyBlogs = () => {
   const [blogs, setBlogs] = useState([])
+  const { user, loading } = useAuth()
+  const navigator = useNavigate()
   useEffect(() => {
-    fetch(
-      `${import.meta.env.VITE_SERVER_URL}/blogs/my-blogs/${'a4arpon@gmail.com'}`
-    )
+    if (!user && !loading) {
+      navigator('/')
+    }
+  }, [user])
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_SERVER_URL}/blogs/my-blogs/${user?.email}`)
       .then((res) => res.json())
       .then((res) => setBlogs(res))
     return () => setBlogs([])

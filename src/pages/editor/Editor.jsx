@@ -1,15 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
+import { useNavigate } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 
 const Editor = () => {
   const [formValue, setFormValueValue] = useState('')
   const { register, handleSubmit } = useForm()
+  const { user, loading } = useAuth()
   const imgBBUrl = `https://api.imgbb.com/1/upload?key=${
     import.meta.env.VITE_IMGBB_KEY
   }`
+  const navigator = useNavigate()
+  useEffect(() => {
+    if (!user && !loading) {
+      navigator('/')
+    }
+  }, [user])
   const formHandler = (data) => {
     const imgData = new FormData()
     imgData.append('image', data.thumbnailImage[0])
@@ -18,6 +27,9 @@ const Editor = () => {
       blog: formValue,
       thumbnail:
         'https://i.pinimg.com/564x/fb/ef/92/fbef9238845d30e7e2921c30f2e8b213.jpg',
+      publishedAt: new Date(),
+      authorEmail: user?.email,
+      author: user?.displayName,
     }
     fetch(`${import.meta.env.VITE_SERVER_URL}/blogs`, {
       method: 'POST',

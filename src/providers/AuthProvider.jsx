@@ -3,7 +3,9 @@ import {
   getAuth,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
   updateProfile
 } from 'firebase/auth'
 import { createContext, useEffect, useState } from 'react'
@@ -27,15 +29,13 @@ const AuthProvider = ({ children }) => {
   // user logout
   const logout = () => {
     setLoading(true)
-    localStorage.removeItem('access-token')
     return signOut(fAuth)
   }
-  // upgrade profile and photo
-  const updateUser = (name, photo) => {
+  // upgrade profile
+  const updateUser = (name) => {
     setLoading(true)
     return updateProfile(fAuth.currentUser, {
       displayName: name,
-      photoURL: photo,
     })
   }
   // continue With Google
@@ -55,7 +55,15 @@ const AuthProvider = ({ children }) => {
       unsubscribe()
     }
   }, [user])
-  const authPacket = {}
+  const authPacket = {
+    user,
+    registerUser,
+    loginUser,
+    signInGoogle,
+    updateUser,
+    logout,
+    loading,
+  }
   return (
     <AuthContext.Provider value={authPacket}>{children}</AuthContext.Provider>
   )

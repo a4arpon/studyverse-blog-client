@@ -1,5 +1,6 @@
 import { BsFillArrowUpRightSquareFill } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
+import { dateFormat } from '../../utils/dateFormat'
 const BlogListItem = ({ blog }) => {
   const { title, publishedAt, thumbnail, _id } = blog || {}
   return (
@@ -13,15 +14,15 @@ const BlogListItem = ({ blog }) => {
         className="h-24 rounded-lg hidden lg:inline"
       />
       <div>
-        <h1 className="text-lg truncate font-semibold">{title}</h1>
+        <h1 className="text-2xl truncate font-semibold">{title}</h1>
         <p>
-          <strong>Published At : </strong> {publishedAt}
+          <strong>Published At : </strong> {dateFormat(publishedAt)}
         </p>
         <div className="mt-3 flex gap-3">
           <Link to={`/blogs/${_id}`} className="btn btn-neutral">
             <BsFillArrowUpRightSquareFill size={24} /> View Post
           </Link>
-          <Link to={`/blogs/${_id}`} className="btn btn-warning">
+          <Link to={`/editor/${_id}`} className="btn btn-warning">
             <BsFillArrowUpRightSquareFill size={24} /> Edit Post
           </Link>
         </div>

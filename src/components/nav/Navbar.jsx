@@ -1,21 +1,45 @@
+import {
+  BsHouse,
+  BsPersonCircle,
+  BsPlusSquare,
+  BsPower,
+  BsReverseLayoutTextSidebarReverse
+} from 'react-icons/bs'
 import { Link } from 'react-router-dom'
-
+import useAuth from '../../hooks/useAuth'
 const NavItems = () => {
+  const { user } = useAuth()
   return (
     <>
       <li>
-        <Link to={'/'}>Home</Link>
+        <Link to={'/'}>
+          <BsHouse size={16} /> Home
+        </Link>
       </li>
       <li>
-        <Link to={'/blogs'}>Blogs</Link>
+        <Link to={'/blogs'}>
+          <BsReverseLayoutTextSidebarReverse size={16} /> Blogs
+        </Link>
       </li>
-      <li>
-        <Link to={'/my-posts'}>My Posts</Link>
-      </li>
+      {user && (
+        <>
+          <li>
+            <Link to={'/my-posts'}>
+              <BsPersonCircle size={16} /> My Posts
+            </Link>
+          </li>
+          <li>
+            <Link to={'/editor'}>
+              <BsPlusSquare size={16} /> Post Now
+            </Link>
+          </li>
+        </>
+      )}
     </>
   )
 }
 const Navbar = () => {
+  const { user, logout } = useAuth()
   return (
     <nav className="bg-base-300 sticky top-0 z-10 bg-opacity-90">
       <div className="navbar container mx-auto">
@@ -54,7 +78,15 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn btn-neutral">Login</a>
+          {user ? (
+            <button className="btn btn-error" onClick={() => logout()}>
+              <BsPower size={22} /> Logout
+            </button>
+          ) : (
+            <Link to={'/login'} className="btn btn-neutral">
+              <BsPower size={22} /> Login
+            </Link>
+          )}
         </div>
       </div>
     </nav>
