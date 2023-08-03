@@ -1,7 +1,7 @@
-import { BsFillArrowUpRightSquareFill } from 'react-icons/bs'
+import { BsFillArrowUpRightSquareFill, BsTrash3 } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import { dateFormat } from '../../utils/dateFormat'
-const BlogListItem = ({ blog }) => {
+const BlogListItem = ({ blog, deleteBlogs }) => {
   const { title, publishedAt, thumbnail, _id } = blog || {}
   return (
     <div className="bg-base-200 p-3 lg:p-5 rounded-lg flex flex-col gap-2 lg:flex-row items-center">
@@ -25,6 +25,9 @@ const BlogListItem = ({ blog }) => {
           <Link to={`/editor/${_id}`} className="btn btn-warning">
             <BsFillArrowUpRightSquareFill size={24} /> Edit Post
           </Link>
+          <button className="btn btn-error" onClick={() => deleteBlogs(_id)}>
+            <BsTrash3 size={24} /> Delete
+          </button>
         </div>
       </div>
     </div>

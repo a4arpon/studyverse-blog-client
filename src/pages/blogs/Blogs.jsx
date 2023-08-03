@@ -16,7 +16,7 @@ const Blogs = () => {
       <Helmet>
         <title>Blogs | StudyVerse</title>
       </Helmet>
-      <main className="container mx-auto p-2 lg:px-0">
+      <main className="container mx-auto p-2 lg:px-0 min-h-screen">
         <div className="grid lg:grid-cols-4 gap-2 my-11">
           {blogs &&
             blogs.map((blog) => <BlogCard key={blog?._id} blog={blog} />)}
