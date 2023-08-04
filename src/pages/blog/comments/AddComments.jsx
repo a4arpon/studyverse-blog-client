@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast'
 import useAuth from '../../../hooks/useAuth'
 
-const AddComments = ({ blogID }) => {
+const AddComments = ({ blogID, setRefetch }) => {
   const { user } = useAuth()
   const commentsAddHandler = () => {
     const commentsPacket = {
@@ -20,6 +20,7 @@ const AddComments = ({ blogID }) => {
       .then((result) => {
         document.getElementById('commentText').value = ''
         toast.success('Comment added on post.')
+        setRefetch(true)
       })
   }
   return (
