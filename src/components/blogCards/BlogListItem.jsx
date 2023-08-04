@@ -14,11 +14,11 @@ const BlogListItem = ({ blog, deleteBlogs }) => {
         className="h-24 rounded-lg hidden lg:inline"
       />
       <div>
-        <h1 className="text-2xl truncate font-semibold">{title}</h1>
+        <h1 className="text-2xl  font-semibold">{title}</h1>
         <p>
           <strong>Published At : </strong> {dateFormat(publishedAt)}
         </p>
-        <div className="mt-3 flex gap-3">
+        <div className="mt-3 flex gap-3 flex-wrap">
           <Link to={`/blogs/${_id}`} className="btn btn-neutral">
             <BsFillArrowUpRightSquareFill size={24} /> View Post
           </Link>

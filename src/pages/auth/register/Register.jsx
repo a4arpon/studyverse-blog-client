@@ -44,7 +44,7 @@ const Register = () => {
       <Helmet>
         <title>Register | StudyVerse</title>
       </Helmet>
-      <div className="hero min-h-screen">
+      <div className="flex min-h-screen w-full justify-center">
         <div className="hero-content flex-col lg:flex-row w-full">
           <div className="text-center lg:text-left lg:w-1/2">
             <h1 className="text-5xl font-bold">Register now!</h1>
