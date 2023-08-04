@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
@@ -21,39 +20,36 @@ const Editor = () => {
   }, [user])
   const formHandler = (data) => {
     const imgData = new FormData()
-    imgData.append('thumbnailImage', data.thumbnailImage[0])
-    console.log(imgData)
-    axios
-      .post(imgBBUrl, imgData)
-      .then((imageData) => console.log(imageData.data))
-    // fetch(imgBBUrl, {
-    //   method: 'POST',
-    //   body: imgData,
-    // })
-    //   .then((res) => res.json())
-    //   .then((imgRes) => {
-    //     const postPacket = {
-    //       title: data.blogTitle,
-    //       blog: formValue,
-    //       thumbnail: imgRes,
-    //       publishedAt: new Date(),
-    //       authorEmail: user?.email,
-    //       author: user?.displayName,
-    //     }
-    //     console.log(postPacket)
-    //   })
-    // fetch(`${import.meta.env.VITE_SERVER_URL}/blogs`, {
-    //   method: 'POST',
-    //   body: JSON.stringify(postPacket),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((res) => {
-    //     navigator('/my-posts')
-    //     toast.success('Post Added.')
-    //   })
+    imgData.append('image', data.thumbnailImage[0])
+    console.log(data, data.thumbnailImage[0])
+    fetch(imgBBUrl, {
+      method: 'POST',
+      body: imgData,
+    })
+      .then((res) => res.json())
+      .then((res) => res.data)
+      .then((imgRes) => {
+        const postPacket = {
+          title: data.blogTitle,
+          blog: formValue,
+          thumbnail: imgRes?.display_url,
+          publishedAt: new Date(),
+          authorEmail: user?.email,
+          author: user?.displayName,
+        }
+        fetch(`${import.meta.env.VITE_SERVER_URL}/blogs`, {
+          method: 'POST',
+          body: JSON.stringify(postPacket),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            navigator('/my-posts')
+            toast.success('Post Added.')
+          })
+      })
   }
   return (
     <>

@@ -15,11 +15,13 @@ const MyBlogs = () => {
     }
   }, [user])
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_SERVER_URL}/blogs/my-blogs/${user?.email}`)
-      .then((res) => res.json())
-      .then((res) => setBlogs(res))
-    return () => setBlogs([])
-  }, [])
+    if (user) {
+      fetch(`${import.meta.env.VITE_SERVER_URL}/blogs/my-blogs/${user?.email}`)
+        .then((res) => res.json())
+        .then((res) => setBlogs(res))
+      return () => setBlogs([])
+    }
+  }, [user])
   const deleteBlogs = (_id) => {
     if (confirm('Are you sure to do it?') == true) {
       fetch(`${import.meta.env.VITE_SERVER_URL}/blogs/${_id}`, {
