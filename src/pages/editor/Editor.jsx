@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
@@ -10,9 +11,8 @@ const Editor = () => {
   const [formValue, setFormValueValue] = useState('')
   const { register, handleSubmit } = useForm()
   const { user, loading } = useAuth()
-  const imgBBUrl = `https://api.imgbb.com/1/upload?key=${
-    import.meta.env.VITE_IMGBB_KEY
-  }`
+  const imgBBUrl =
+    'https://api.imgbb.com/1/upload?key=88f8e6276bff624f5ee959d9fd14bc39'
   const navigator = useNavigate()
   useEffect(() => {
     if (!user && !loading) {
@@ -21,25 +21,39 @@ const Editor = () => {
   }, [user])
   const formHandler = (data) => {
     const imgData = new FormData()
-    imgData.append('image', data.thumbnailImage[0])
-    const postPacket = {
-      title: data.blogTitle,
-      blog: formValue,
-      thumbnail:
-        'https://i.pinimg.com/564x/fb/ef/92/fbef9238845d30e7e2921c30f2e8b213.jpg',
-      publishedAt: new Date(),
-      authorEmail: user?.email,
-      author: user?.displayName,
-    }
-    fetch(`${import.meta.env.VITE_SERVER_URL}/blogs`, {
-      method: 'POST',
-      body: JSON.stringify(postPacket),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => console.log(res))
+    imgData.append('thumbnailImage', data.thumbnailImage[0])
+    console.log(imgData)
+    axios
+      .post(imgBBUrl, imgData)
+      .then((imageData) => console.log(imageData.data))
+    // fetch(imgBBUrl, {
+    //   method: 'POST',
+    //   body: imgData,
+    // })
+    //   .then((res) => res.json())
+    //   .then((imgRes) => {
+    //     const postPacket = {
+    //       title: data.blogTitle,
+    //       blog: formValue,
+    //       thumbnail: imgRes,
+    //       publishedAt: new Date(),
+    //       authorEmail: user?.email,
+    //       author: user?.displayName,
+    //     }
+    //     console.log(postPacket)
+    //   })
+    // fetch(`${import.meta.env.VITE_SERVER_URL}/blogs`, {
+    //   method: 'POST',
+    //   body: JSON.stringify(postPacket),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     navigator('/my-posts')
+    //     toast.success('Post Added.')
+    //   })
   }
   return (
     <>
