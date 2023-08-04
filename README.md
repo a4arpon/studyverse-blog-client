@@ -1,4 +1,4 @@
-# [StudyVerse Blog Project](https://studyverse-wayne.netlify.app/)
+# [StudyVerse Blog Project](https://studyverse-wayne.web.app/)
 
 ## Setup Project
 
