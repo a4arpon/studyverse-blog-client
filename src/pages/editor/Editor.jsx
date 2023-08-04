@@ -10,8 +10,9 @@ const Editor = () => {
   const [formValue, setFormValueValue] = useState('')
   const { register, handleSubmit } = useForm()
   const { user, loading } = useAuth()
-  const imgBBUrl =
-    'https://api.imgbb.com/1/upload?key=88f8e6276bff624f5ee959d9fd14bc39'
+  const imgBBUrl = `https://api.imgbb.com/1/upload?key=${
+    import.meta.env.VITE_IMGBB_KEY
+  }`
   const navigator = useNavigate()
   useEffect(() => {
     if (!user && !loading) {
