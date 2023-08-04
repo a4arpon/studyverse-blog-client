@@ -5,3 +5,21 @@
 body {
   font-family: 'Inter', sans-serif;
 }
+h1 {
+  @apply text-4xl;
+}
+
+h2 {
+  @apply text-2xl;
+}
+
+h3 {
+  @apply text-xl;
+}
+
+h4 {
+  @apply text-lg;
+}
+.blog a {
+  @apply underline text-blue-600 !important;
+}

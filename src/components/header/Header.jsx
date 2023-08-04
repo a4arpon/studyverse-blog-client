@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const Header = () => {
   return (
     <header
@@ -10,13 +12,15 @@ const Header = () => {
       <div className="hero-overlay bg-opacity-60"></div>
       <div className="hero-content text-center text-neutral-content">
         <div className="max-w-5xl">
-          <h1 className="mb-5 text-8xl font-bold">StudyVerse</h1>
-          <p className="mb-10 text-5xl">
-            <span className="text-8xl">Share</span> your{' '}
-            <span className="text-7xl">knowledge</span> and try to help{' '}
-            <span className="text-8xl">upscale</span> others.
+          <h1 className="mb-5 text-3xl lg:text-8xl font-bold">StudyVerse</h1>
+          <p className="mb-10 text-lg lg:text-5xl">
+            <span className="lg:text-8xl">Share</span> your{' '}
+            <span className="lg:text-7xl">knowledge</span> and try to help{' '}
+            <span className="lg:text-8xl">upscale</span> others.
           </p>
-          <button className="btn btn-neutral">Explore Our Blogs</button>
+          <Link to={'/blogs'} className="btn btn-neutral">
+            Explore Our Blogs
+          </Link>
         </div>
       </div>
     </header>
